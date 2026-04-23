@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Achmad Roykhan Sabiq — Mathematics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f4f0;
+    --gray-100: #e8e6e0;
+    --gray-300: #b0aca2;
+    --gray-500: #6e6a62;
+    --gray-700: #3a3732;
+    --accent: #1a1a1a;
+    --border: rgba(10,10,10,0.12);
+  }
+ 
+  html { scroll-behavior: smooth; }
+ 
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+ 
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+ 
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    background: rgba(245,244,240,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s ease;
+  }
+ 
+  nav.scrolled { padding: 1rem 3rem; }
+ 
+  .nav-logo {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--black);
+    text-decoration: none;
+  }
+ 
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+ 
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+ 
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1px;
+    background: var(--black);
+    transition: width 0.3s ease;
+  }
+ 
+  .nav-links a:hover { color: var(--black); }
+  .nav-links a:hover::after { width: 100%; }
+ 
+  /* ── HAMBURGER ── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--black); transition: all 0.3s; }
+ 
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    gap: 4rem;
+    position: relative;
+  }
+ 
+  #hero::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent);
+  }
+ 
+  .hero-text { max-width: 520px; }
+ 
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+ 
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--gray-300);
+  }
+ 
+  h1 {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.4rem;
+  }
+ 
+  h1 em {
+    font-style: italic;
+    color: var(--gray-500);
+  }
+ 
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--gray-500);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 440px;
+  }
+ 
+  .hero-cta {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+ 
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    border: 1px solid var(--black);
+    color: var(--black);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+ 
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--black);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+ 
+  .btn:hover { color: var(--white); }
+  .btn:hover::before { transform: translateX(0); }
+ 
+  .btn-ghost {
+    border-color: var(--gray-300);
+    color: var(--gray-500);
+  }
+  .btn-ghost:hover { color: var(--white); border-color: var(--black); }
+ 
+  .hero-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+ 
+  .photo-frame {
+    width: 260px;
+    height: 320px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    background: var(--gray-100);
+  }
+ 
+  .photo-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.4);
+    pointer-events: none;
+  }
+ 
+  .photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    filter: grayscale(100%);
+    transition: filter 0.4s ease;
+  }
+ 
+  .photo-frame:hover img { filter: grayscale(60%); }
+ 
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    color: var(--gray-300);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+ 
+  .photo-placeholder svg { opacity: 0.3; }
+ 
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    width: 100%;
+    max-width: 320px;
+  }
+ 
+  .stat {
+    background: var(--white);
+    padding: 1.2rem 1rem;
+    text-align: center;
+  }
+ 
+  .stat-num {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+ 
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+  }
+ 
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 3rem;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+ 
+  section.visible { opacity: 1; transform: translateY(0); }
+ 
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+ 
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--gray-300);
+  }
+ 
+  h2 {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+ 
+  /* ── ABOUT ── */
+  #about .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+ 
+  .about-body {
+    font-size: 1.05rem;
+    color: var(--gray-700);
+    line-height: 1.9;
+  }
+ 
+  .about-body p + p { margin-top: 1.2rem; }
+ 
+  .about-body strong { font-weight: 500; color: var(--black); }
+ 
+  .about-sidebar { display: flex; flex-direction: column; gap: 2.5rem; }
+ 
+  .info-block h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-300);
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+ 
+  .info-block p, .info-block a {
+    font-size: 0.9rem;
+    color: var(--gray-700);
+    text-decoration: none;
+    line-height: 1.7;
+  }
+ 
+  .info-block a:hover { color: var(--black); text-decoration: underline; }
+ 
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.4rem; }
+ 
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--border);
+    color: var(--gray-500);
+    background: var(--gray-100);
+  }
+ 
+  /* ── RESEARCH ── */
+  .research-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: start;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+ 
+  .research-item:first-child { border-top: 1px solid var(--border); }
+ 
+  .research-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-300);
+    margin-bottom: 0.6rem;
+  }
+ 
+  .research-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+    color: var(--black);
+  }
+ 
+  .research-desc {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+ 
+  .research-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gray-300);
+    white-space: nowrap;
+    padding-top: 0.3rem;
+  }
+ 
+  /* ── TEACHING ── */
+  .teaching-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+ 
+  .teaching-card {
+    background: var(--white);
+    padding: 2rem 1.8rem;
+    transition: background 0.2s;
+  }
+ 
+  .teaching-card:hover { background: var(--gray-100); }
+ 
+  .teaching-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-300);
+    margin-bottom: 0.7rem;
+  }
+ 
+  .teaching-card h3 {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+ 
+  .teaching-card p {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+  }
+ 
+  .teaching-courses {
+    margin-top: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+ 
+  .course-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+ 
+  .course-item::before {
+    content: '—';
+    color: var(--gray-300);
+  }
+ 
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; padding-left: 2.5rem; }
+ 
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.5rem; bottom: 0.5rem;
+    width: 1px;
+    background: var(--border);
+  }
+ 
+  .timeline-item {
+    position: relative;
+    padding-bottom: 3rem;
+  }
+ 
+  .timeline-item:last-child { padding-bottom: 0; }
+ 
+  .timeline-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 0.45rem;
+    width: 7px; height: 7px;
+    border: 1px solid var(--black);
+    background: var(--white);
+    transform: translateX(-3px);
+  }
+ 
+  .timeline-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+ 
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gray-300);
+  }
+ 
+  .timeline-org {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--gray-500);
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+  }
+ 
+  .timeline-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+ 
+  .timeline-body {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+    line-height: 1.75;
+  }
+ 
+  /* ── COMPETITIONS ── */
+  .comp-list { display: flex; flex-direction: column; gap: 0; }
+ 
+  .comp-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: padding-left 0.2s;
+  }
+ 
+  .comp-item:first-child { border-top: 1px solid var(--border); }
+  .comp-item:hover { padding-left: 0.5rem; }
+ 
+  .comp-icon {
+    font-size: 1.1rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: var(--gray-100);
+    flex-shrink: 0;
+  }
+ 
+  .comp-name {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--black);
+  }
+ 
+  .comp-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gray-300);
+    letter-spacing: 0.1em;
+  }
+ 
+  /* ── CV ── */
+  #cv { background: var(--black); color: var(--white); }
+  #cv .section-header { border: none; }
+  #cv .section-num { color: var(--gray-700); }
+  #cv h2 { color: var(--white); }
+ 
+  .cv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+ 
+  .cv-block { margin-bottom: 2.5rem; }
+ 
+  .cv-block-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gray-500);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+ 
+  .cv-entry { margin-bottom: 1.5rem; }
+ 
+  .cv-entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+ 
+  .cv-entry-title {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--white);
+  }
+ 
+  .cv-entry-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--gray-500);
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+  }
+ 
+  .cv-entry-sub {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    font-style: italic;
+    font-family: 'EB Garamond', serif;
+  }
+ 
+  .skill-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+  }
+ 
+  .skill-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gray-300);
+    min-width: 100px;
+    letter-spacing: 0.06em;
+  }
+ 
+  .skill-bar {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+  }
+ 
+  .skill-bar-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    background: var(--white);
+    transition: width 1s ease;
+  }
+ 
+  .cv-download {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+ 
+  .btn-inv {
+    border-color: rgba(255,255,255,0.25);
+    color: var(--white);
+  }
+ 
+  .btn-inv::before { background: var(--white); }
+  .btn-inv:hover { color: var(--black); }
+ 
+  /* ── CONTACT ── */
+  #contact .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+ 
+  .contact-heading {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 500;
+    line-height: 1.35;
+    margin-bottom: 1.2rem;
+  }
+ 
+  .contact-sub {
+    font-size: 0.95rem;
+    color: var(--gray-500);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+ 
+  .contact-links { display: flex; flex-direction: column; gap: 1.2rem; }
+ 
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--gray-700);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+ 
+  .contact-link:hover { color: var(--black); }
+ 
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gray-500);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+ 
+  .contact-link:hover .contact-link-icon {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+ 
+  .contact-map {
+    aspect-ratio: 4/3;
+    border: 1px solid var(--border);
+    background: var(--gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+ 
+  /* Simple Surabaya map dots illustration */
+  .map-dots {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+ 
+  .map-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-300);
+    text-align: center;
+    z-index: 1;
+  }
+ 
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+ 
+  .footer-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    color: var(--gray-500);
+  }
+ 
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--gray-300);
+    letter-spacing: 0.08em;
+  }
+ 
+  /* ── PORTFOLIO ── */
+  .portfolio-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-bottom: 4rem;
+    align-items: start;
+  }
+ 
+  .portfolio-lead {
+    font-size: 1.05rem;
+    color: var(--gray-700);
+    line-height: 1.9;
+  }
+ 
+  .portfolio-lead p + p { margin-top: 1rem; }
+ 
+  .latex-linktree {
+    border: 1px solid var(--border);
+    padding: 2rem;
+    background: var(--gray-100);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+ 
+  .latex-linktree-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+ 
+  .latex-linktree-icon {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'EB Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    flex-shrink: 0;
+  }
+ 
+  .latex-linktree h4 {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+ 
+  .latex-linktree-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    color: var(--gray-500);
+    letter-spacing: 0.08em;
+  }
+ 
+  .latex-course-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+ 
+  .latex-course-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--gray-700);
+    font-size: 0.88rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--border);
+    background: var(--white);
+    transition: all 0.2s;
+  }
+ 
+  .latex-course-link:hover {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+ 
+  .latex-course-link span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--gray-300);
+    transition: color 0.2s;
+  }
+ 
+  .latex-course-link:hover span { color: var(--gray-300); }
+ 
+  .latex-linktree-footer {
+    margin-top: 0.5rem;
+  }
+ 
+  .portfolio-divider {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.63rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gray-300);
+    margin-bottom: 2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--border);
+  }
+ 
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+ 
+  .project-card {
+    background: var(--white);
+    padding: 2rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+ 
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--black);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+ 
+  .project-card:hover { background: var(--gray-100); }
+  .project-card:hover::before { transform: scaleX(1); }
+ 
+  .project-card-icon {
+    font-size: 1.4rem;
+    width: 44px; height: 44px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    background: var(--white);
+  }
+ 
+  .project-card h3 {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+ 
+  .project-card p {
+    font-size: 0.85rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+    flex: 1;
+  }
+ 
+  .project-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+ 
+  .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+ 
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid var(--border);
+    color: var(--gray-500);
+  }
+ 
+  .project-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gray-300);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+ 
+  .project-link:hover { color: var(--black); }
+ 
+  .portfolio-cta-bar {
+    margin-top: 3rem;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    background: var(--gray-100);
+  }
+ 
+  .portfolio-cta-bar p {
+    font-size: 0.9rem;
+    color: var(--gray-500);
+  }
+ 
+  .portfolio-cta-bar strong { color: var(--black); font-weight: 500; }
+ 
+  @media (max-width: 900px) {
+    .portfolio-intro { grid-template-columns: 1fr; gap: 2.5rem; }
+    .project-grid { grid-template-columns: 1fr; }
+  }
+ 
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+ 
+  .hero-text > * {
+    opacity: 0;
+    animation: fadeUp 0.7s ease forwards;
+  }
+ 
+  .hero-tag          { animation-delay: 0.1s; }
+  .hero-text h1      { animation-delay: 0.25s; }
+  .hero-text p       { animation-delay: 0.4s; }
+  .hero-cta          { animation-delay: 0.55s; }
+  .hero-visual       { opacity: 0; animation: fadeUp 0.7s ease 0.35s forwards; }
+ 
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    nav.scrolled { padding: 0.9rem 1.5rem; }
+    .nav-links { display: none; flex-direction: column; position: fixed; top: 0; right: 0; bottom: 0; width: 70vw; background: var(--white); padding: 5rem 2rem 2rem; gap: 2rem; border-left: 1px solid var(--border); z-index: 90; transition: transform 0.35s ease; transform: translateX(100%); }
+    .nav-links.open { display: flex; transform: translateX(0); }
+    .hamburger { display: flex; z-index: 100; }
+ 
+    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; gap: 3rem; }
+    #hero::after { display: none; }
+    .hero-visual { order: -1; }
+    .photo-frame { width: 180px; height: 220px; }
+    .hero-stats { max-width: 100%; }
+ 
+    section { padding: 4rem 1.5rem; }
+ 
+    #about .about-grid,
+    .cv-grid,
+    #contact .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+ 
+    .research-item { grid-template-columns: 1fr; gap: 0.5rem; }
+ 
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+ 
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">A. R. Sabiq</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#teaching">Teaching</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#cv">CV</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+ 
+<!-- HERO -->
+<section id="hero" style="opacity:1;transform:none;border:none;">
+  <div class="hero-text">
+    <div class="hero-tag">Mathematician · Researcher · Educator</div>
+    <h1>Achmad Roykhan<br><em>Sabiq</em></h1>
+    <p class="hero-desc">
+      Mathematics undergraduate at Airlangga University, specializing in mathematical inequalities and real analysis. Aspiring to pursue graduate study in mathematics.
+    </p>
+    <div class="hero-cta">
+      <a href="#research" class="btn">View Research</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="photo-frame" id="photoFrame">
+      <img src="Profile.jpeg" alt="Achmad Roykhan Sabiq" />
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">3.57</span>
+        <span class="stat-label">GPA</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">4+</span>
+        <span class="stat-label">Years tutoring</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2026</span>
+        <span class="stat-label">Graduation</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>
+        I am a final-year <strong>Mathematics student at Airlangga University</strong>, Surabaya, with a deep passion for algebra and mathematical analysis. My academic journey has been shaped by both rigorous theoretical study and active involvement in the mathematics community.
+      </p>
+      <p>
+        My current research centers on <strong>inequalities in real numbers</strong>, with my undergraduate thesis focusing on <em>Discrete Steffensen's Inequality and Its Generalizations</em> — a problem at the intersection of classical analysis and discrete mathematics.
+      </p>
+      <p>
+        Beyond research, I am deeply committed to <strong>mathematics education</strong>. I have tutored calculus, linear algebra, differential equations, and other courses to undergraduate students across multiple disciplines, and have served as a question designer for the Math and Logic Competition (MLC).
+      </p>
+      <p>
+        I aspire to pursue a <strong>master's degree in mathematics</strong>, where I can further investigate open problems in analysis and contribute to the mathematical community through both research and teaching.
+      </p>
+    </div>
+    <div class="about-sidebar">
+      <div class="info-block">
+        <h4>Affiliation</h4>
+        <p>Department of Mathematics<br/>Airlangga University, Surabaya</p>
+      </div>
+      <div class="info-block">
+        <h4>Research Interests</h4>
+        <div class="tag-list">
+          <span class="tag">Mathematical Inequalities</span>
+          <span class="tag">Real Analysis</span>
+          <span class="tag">Functional Analysis</span>
+          <span class="tag">Harmonic Analysis</span>
+          <span class="tag">Discrete Mathematics</span>
+          <span class="tag">Algebra</span>
+        </div>
+      </div>
+      <div class="info-block">
+        <h4>Skills</h4>
+        <div class="tag-list">
+          <span class="tag">LaTeX</span>
+          <span class="tag">C++</span>
+          <span class="tag">Data Analysis</span>
+          <span class="tag">Microsoft Office</span>
+          <span class="tag">Indonesian</span>
+          <span class="tag">English</span>
+        </div>
+      </div>
+      <div class="info-block">
+        <h4>Links</h4>
+        <p>
+          <a href="https://www.linkedin.com/in/achmadroykhansabiq/" target="_blank">LinkedIn ↗</a><br/>
+          <a href="https://www.instagram.com/roykhanachmad/" target="_blank">Instagram ↗</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Research &amp; Publications</h2>
+  </div>
+ 
+  <div class="research-item">
+    <div>
+      <div class="research-type">Undergraduate Thesis · In Progress</div>
+      <div class="research-title">Discrete Steffensen's Inequality and Its Generalization</div>
+      <p class="research-desc">
+        This research generalizes the classical discrete Steffensen's inequality using convex and concave function approaches on measure spaces. 
+        We prove an upper bound generalization for parameters \(\alpha, \beta\) with \(\beta \geq \alpha - 1\) and \(\alpha > 1\), 
+        and establish a new lower bound generalization for \(0 &lt; \beta \leq 1 - \alpha\) with \(0 \leq \alpha &lt; 1\), 
+        extending prior results of Gauchman via Jensen's inequality on Lebesgue spaces.
+        <br/><br/>
+        <em style="font-size:0.82rem;color:var(--gray-300);">
+          Co-authored with Eridani and Muchammad Yusuf Syaifuddin · Department of Mathematics, Universitas Airlangga</span>
+        </em>
+      </p>
+    </div>
+    <div class="research-year">2025 – 2026</div>
+  </div>
+ 
+  <div class="research-item">
+    <div>
+      <div class="research-type">Academic Program · Selected Participant</div>
+      <div class="research-title">3-Day School on Harmonic &amp; Functional Analysis 2025</div>
+      <p class="research-desc">
+        A competitive intensive program held at <strong>Institut Teknologi Bandung (ITB), Ganesha Campus</strong>, December 2025, 
+        devoted to the study of harmonic and functional analysis and related topics. 
+        The program featured 6 main lectures by <strong>Prof. Hendra Gunawan (ITB)</strong>, 
+        complemented by two special lectures from invited lecturers.
+        <br/><br/>
+        Participants were selected undergraduate mathematics students from across Indonesian universities 
+        who had completed Multivariable Calculus and/or Real Analysis — with only 10 non-ITB seats available nationally. 
+        The program provided deep insights into research perspectives in modern mathematical analysis.
+      </p>
+      <div style="margin-top:1rem;display:flex;gap:0.6rem;flex-wrap:wrap;">
+        <span class="tag">Harmonic Analysis</span>
+        <span class="tag">Functional Analysis</span>
+        <span class="tag">ITB Ganesha</span>
+      </div>
+      <div style="margin-top:1rem;">
+        <a href="https://bermatematika.net/2025/07/24/3-day-school-on-harmonic-and-functional-analysis-2025/" 
+           target="_blank"
+           style="font-family:'DM Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;color:var(--gray-500);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:1px;transition:color 0.2s;"
+           onmouseover="this.style.color='var(--black)'" 
+           onmouseout="this.style.color='var(--gray-500)'">
+          bermatematika.net ↗
+        </a>
+      </div>
+    </div>
+    <div class="research-year">Dec 2025</div>
+  </div>
+ 
+  <div class="research-item">
+    <div>
+      <div class="research-type">Focus Area · Ongoing</div>
+      <div class="research-title">Inequalities in Real Numbers</div>
+      <p class="research-desc">
+        Active research exploring the structure and properties of classical and generalized inequalities within real number systems, with applications to analysis and approximation theory.
+      </p>
+    </div>
+    <div class="research-year">2024 – Present</div>
+  </div>
+</section>
+ 
+<!-- TEACHING -->
+<section id="teaching">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Teaching &amp; Tutoring</h2>
+  </div>
+  <div class="teaching-grid">
+    <div class="teaching-card">
+      <div class="teaching-card-label">BEM FST · 2023–2025</div>
+      <h3>Calculus Tutor</h3>
+      <p>Provided calculus tutoring for undergraduate students across Environmental Engineering, Biomedical Engineering, Chemistry, and other departments.</p>
+    </div>
+ 
+    <div class="teaching-card">
+      <div class="teaching-card-label">HIMATIKA · 2023–Present</div>
+      <h3>Mathematics Course Tutor</h3>
+      <p>Tutored mathematics undergraduate students across a wide range of courses.</p>
+      <div class="teaching-courses">
+        <span class="course-item">Fundamentals of Mathematics I &amp; II</span>
+        <span class="course-item">Algorithm and Programming</span>
+        <span class="course-item">Ordinary Differential Equations</span>
+        <span class="course-item">Multivariable Calculus</span>
+        <span class="course-item">Linear Algebra</span>
+      </div>
+    </div>
+ 
+    <div class="teaching-card">
+      <div class="teaching-card-label">Jelajah Ilmu · 2025</div>
+      <h3>High School Mathematics Tutor</h3>
+      <p>Tutored high school students in mathematics at Jelajah Ilmu Learning Center, Bangkalan.</p>
+    </div>
+ 
+    <div class="teaching-card">
+      <div class="teaching-card-label">MLC · 2023–2024</div>
+      <h3>Competition Problem Designer</h3>
+      <p>Designed and reviewed mathematics and logic competition problems for junior and senior high school students, coordinating the question development team.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Experience &amp; Activities</h2>
+  </div>
+ 
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;">
+    <div>
+      <p style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-300);margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:0.8rem;">Work &amp; Organization</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">
+            <span class="timeline-date">01–02 / 2025</span>
+            <span class="timeline-org">BPS Surabaya</span>
+          </div>
+          <div class="timeline-title">Internship — Central Bureau of Statistics</div>
+          <p class="timeline-body">Collected and maintained market price data for key commodities, analyzed price fluctuations, and contributed to infographics and official statistical reports.</p>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">
+            <span class="timeline-date">02–12 / 2024</span>
+            <span class="timeline-org">HIMATIKA</span>
+          </div>
+          <div class="timeline-title">Senior Academic Staff</div>
+          <p class="timeline-body">Supervised academic staff, coordinated departmental programs, and led recruitment for the Math and Logic Competition organizing committee.</p>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">
+            <span class="timeline-date">05–09 / 2024</span>
+            <span class="timeline-org">ICOMCOS</span>
+          </div>
+          <div class="timeline-title">Partnership &amp; Sponsorship Staff</div>
+          <p class="timeline-body">Managed sponsor communications, supported invited speakers, and coordinated logistics for a departmental-level academic conference.</p>
+        </div>
+ 
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-meta">
+            <span class="timeline-date">02–12 / 2023</span>
+            <span class="timeline-org">HIMATIKA</span>
+          </div>
+          <div class="timeline-title">Academic Staff</div>
+          <p class="timeline-body">Organized academic programs, compiled exam materials, and served on event committees for student learning activities.</p>
+        </div>
+      </div>
+    </div>
+ 
+    <div>
+      <p style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-300);margin-bottom:2rem;border-bottom:1px solid var(--border);padding-bottom:0.8rem;">Competitions &amp; Achievements</p>
+      <div class="comp-list">
+        <div class="comp-item">
+          <div class="comp-icon">I</div>
+          <div class="comp-name">2nd Place — PKM Cup FST</div>
+          <div class="comp-year">2023</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-icon">II</div>
+          <div class="comp-name">Airlangga Delegation — ONMIPA Mathematics</div>
+          <div class="comp-year">2024</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-icon">III</div>
+          <div class="comp-name">Airlangga Delegation — ONMIPA Mathematics</div>
+          <div class="comp-year">2025</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-icon">IV</div>
+          <div class="comp-name">Qualified — MaGD ITB Round 2</div>
+          <div class="comp-year">2025</div>
+        </div>
+        <div class="comp-item">
+          <div class="comp-icon">V</div>
+          <div>
+            <div class="comp-name">Selected Participant — 3-Day School on Harmonic &amp; Functional Analysis</div>
+          </div>
+          <div class="comp-year">2025</div>
+        </div>
+      </div>
+ 
+      <div style="margin-top:3rem;">
+        <p style="font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-300);margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0.8rem;">Education</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-meta">
+              <span class="timeline-date">2022 – 2026</span>
+            </div>
+            <div class="timeline-title">B.Sc. Mathematics — Airlangga University</div>
+            <p class="timeline-body">GPA: 3.57 / 4.00 · Surabaya, Indonesia</p>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-meta">
+              <span class="timeline-date">2019 – 2022</span>
+            </div>
+            <div class="timeline-title">Natural Sciences — SMAN 1 Bangkalan</div>
+            <p class="timeline-body">Bangkalan, Indonesia</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Portfolio</h2>
+  </div>
+ 
+  <!-- INTRO + LATEX LINKTREE -->
+  <div class="portfolio-intro">
+    <div class="portfolio-lead">
+      <p>
+        Beyond research and teaching, I actively build and document projects spanning <strong>mathematical typesetting</strong>, <strong>game development</strong>, <strong>mathematical modeling</strong>, and <strong>data structures &amp; algorithms</strong>.
+      </p>
+      <p>
+        My LaTeX portfolio — published under <strong>YorMathFlix</strong> — contains typeset course notes and problem sets for advanced mathematics courses, used as study references by fellow students. These documents were produced as part of my tutoring activities across HIMATIKA and BEM FST.
+      </p>
+      <p>
+        The projects below are hosted on Google Drive and demonstrate applied programming and mathematical modeling skills developed alongside my mathematics degree.
+      </p>
+    </div>
+ 
+    <!-- LaTeX Linktree Card -->
+    <div class="latex-linktree">
+      <div class="latex-linktree-head">
+        <div class="latex-linktree-icon">\(\TeX\)</div>
+        <div>
+          <h4>LaTeX Math Notes</h4>
+          <div class="latex-linktree-sub">yormathflix · linktr.ee/yormathflix</div>
+        </div>
+      </div>
+      <div class="latex-course-links">
+        <a class="latex-course-link" href="https://drive.google.com/drive/folders/1hjVlM5H2hPhPIWSHKT8Ug9jwaBarVtrX?usp=sharing" target="_blank">
+          Real Analysis <span>↗</span>
+        </a>
+        <a class="latex-course-link" href="https://drive.google.com/drive/folders/19UMU7wicW1XjZpQ7R_gccyiN1CNhQZe3?usp=sharing" target="_blank">
+          Linear Algebra <span>↗</span>
+        </a>
+        <a class="latex-course-link" href="https://drive.google.com/drive/folders/1-lGpBHBQR3zq0l76qJ3jzWKWBiXblZOT?usp=sharing" target="_blank">
+          Differential Geometry <span>↗</span>
+        </a>
+        <a class="latex-course-link" href="https://drive.google.com/drive/folders/1lyPpKxhiasRJcSsQrCrr_vbHd8avE14e?usp=sharing" target="_blank">
+          Metric Spaces <span>↗</span>
+        </a>
+        <a class="latex-course-link" href="https://drive.google.com/drive/folders/1SlO0D_NBoZvtlfkREMeuLSv_yp-nw8PQ?usp=sharing" target="_blank">
+          Measure Theory <span>↗</span>
+        </a>
+        <a class="latex-course-link" href="https://drive.google.com/drive/folders/1P8dNF3cL83ZY2A2mThZH_opsP-AcwXOo?usp=drive_link" target="_blank">
+          Calculus <span>↗</span>
+        </a>
+      </div>
+      <div class="latex-linktree-footer">
+        <a href="https://linktr.ee/yormathflix" target="_blank" class="btn" style="width:100%;justify-content:center;font-size:0.68rem;">
+          View All on Linktree ↗
+        </a>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- OTHER PROJECTS -->
+  <div class="portfolio-divider">Other Projects — Google Drive</div>
+  <div class="project-grid">
+ 
+    <div class="project-card">
+      <div class="project-card-icon">🎮</div>
+      <h3>Game Development</h3>
+      <p>Programming projects in the form of interactive games, applying logic, algorithms, and computational thinking developed through coursework in C++ and related languages.</p>
+      <div class="project-card-footer">
+        <div class="project-tags">
+          <span class="project-tag">C++</span>
+          <span class="project-tag">Logic</span>
+          <span class="project-tag">Algorithm</span>
+        </div>
+        <a class="project-link" href="https://drive.google.com/drive/folders/1OUCnKeV2pPtNXBI0AtNtuDeiFAB2sUbE?usp=drive_link" target="_blank">Drive ↗</a>
+      </div>
+    </div>
+ 
+    <div class="project-card">
+      <div class="project-card-icon">📐</div>
+      <h3>Mathematical Modeling</h3>
+      <p>Applied mathematics projects exploring the formulation and analysis of mathematical models, translating real-world problems into structured mathematical frameworks.</p>
+      <div class="project-card-footer">
+        <div class="project-tags">
+          <span class="project-tag">Modeling</span>
+          <span class="project-tag">Analysis</span>
+          <span class="project-tag">Applied Math</span>
+        </div>
+        <a class="project-link" href="https://drive.google.com/drive/folders/1ZhzljeYBxkL48vouXyYcsPiFLyVmkiM1?usp=drive_link" target="_blank">Drive ↗</a>
+      </div>
+    </div>
+ 
+    <div class="project-card">
+      <div class="project-card-icon">🌲</div>
+      <h3>Data Structures &amp; Algorithms</h3>
+      <p>Implementations of fundamental data structures and algorithms — including sorting, searching, trees, and graphs — developed as part of the Algorithm and Programming course.</p>
+      <div class="project-card-footer">
+        <div class="project-tags">
+          <span class="project-tag">C++</span>
+          <span class="project-tag">DSA</span>
+          <span class="project-tag">Programming</span>
+        </div>
+        <a class="project-link" href="https://drive.google.com/drive/folders/1n7_oENeaN9LBwamZuKeQPCjnn0W-hILI?usp=drive_link" target="_blank">Drive ↗</a>
+      </div>
+    </div>
+ 
+  </div>
+ 
+  <div class="portfolio-cta-bar">
+    <p>All projects are openly accessible. <strong>LaTeX typesetting</strong> available for freelance or academic work — feel free to reach out.</p>
+    <a href="#contact" class="btn">Get in Touch</a>
+  </div>
+</section>
+ 
+<!-- CV -->
+<section id="cv">
+  <div class="section-header">
+    <span class="section-num" style="color:#3a3732;">06</span>
+    <h2>Curriculum Vitae</h2>
+  </div>
+ 
+  <div class="cv-grid">
+    <div>
+      <div class="cv-block">
+        <div class="cv-block-title">Education</div>
+        <div class="cv-entry">
+          <div class="cv-entry-head">
+            <span class="cv-entry-title">Airlangga University</span>
+            <span class="cv-entry-date">2022 – 2026</span>
+          </div>
+          <div class="cv-entry-sub">B.Sc. Mathematics · GPA 3.57/4.00</div>
+        </div>
+        <div class="cv-entry">
+          <div class="cv-entry-head">
+            <span class="cv-entry-title">SMAN 1 Bangkalan</span>
+            <span class="cv-entry-date">2019 – 2022</span>
+          </div>
+          <div class="cv-entry-sub">Natural Sciences</div>
+        </div>
+      </div>
+ 
+      <div class="cv-block">
+        <div class="cv-block-title">Work Experience</div>
+        <div class="cv-entry">
+          <div class="cv-entry-head">
+            <span class="cv-entry-title">BPS Surabaya — Intern</span>
+            <span class="cv-entry-date">Jan–Feb 2025</span>
+          </div>
+          <div class="cv-entry-sub">Data collection, analysis &amp; visualization</div>
+        </div>
+        <div class="cv-entry">
+          <div class="cv-entry-head">
+            <span class="cv-entry-title">Jelajah Ilmu — HS Math Tutor</span>
+            <span class="cv-entry-date">Aug–Dec 2025</span>
+          </div>
+          <div class="cv-entry-sub">High school mathematics, Bangkalan</div>
+        </div>
+      </div>
+ 
+      <div class="cv-block">
+        <div class="cv-block-title">Research</div>
+        <div class="cv-entry">
+          <div class="cv-entry-head">
+            <span class="cv-entry-title">Discrete Steffensen's Inequality</span>
+            <span class="cv-entry-date">2025–2026</span>
+          </div>
+          <div class="cv-entry-sub">Undergraduate thesis · Real Analysis</div>
+        </div>
+      </div>
+    </div>
+ 
+    <div>
+      <div class="cv-block">
+        <div class="cv-block-title">Technical Skills</div>
+        <div class="skill-row">
+          <span class="skill-name">LaTeX</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Math Analysis</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:90%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Data Analysis</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">C++</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:60%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">MS Office</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+        </div>
+      </div>
+ 
+      <div class="cv-block">
+        <div class="cv-block-title">Languages</div>
+        <div class="skill-row">
+          <span class="skill-name">Indonesian</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:100%"></div></div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">English</span>
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:78%"></div></div>
+        </div>
+      </div>
+ 
+      <div class="cv-block">
+        <div class="cv-block-title">Competitions</div>
+        <div class="cv-entry">
+          <span class="cv-entry-title" style="font-size:0.85rem;">2nd Place · PKM Cup FST 2023</span>
+        </div>
+        <div class="cv-entry" style="margin-bottom:0.8rem;">
+          <span class="cv-entry-title" style="font-size:0.85rem;">Delegate · ONMIPA Mathematics 2024 &amp; 2025</span>
+        </div>
+        <div class="cv-entry">
+          <span class="cv-entry-title" style="font-size:0.85rem;">Qualified Round 2 · MaGD ITB 2025</span>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="cv-download">
+    <a href="https://drive.google.com/file/d/1tidPmwBdJbKO72WAi2i-JSLXipSNeTY2/view?usp=sharing" class="btn btn-inv">↓ Download Full CV</a>
+  </div>
+</section>
+ 
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2>Contact</h2>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <h3 class="contact-heading">Let's connect<br><em style="font-family:'EB Garamond',serif;font-style:italic;color:var(--gray-500);">and talk mathematics.</em></h3>
+      <p class="contact-sub">
+        Whether you're interested in research collaboration, tutoring, or just want to discuss an interesting problem — feel free to reach out.
+      </p>
+      <div class="contact-links">
+        <a href="/cdn-cgi/l/email-protection#244149454d48644349454d480a474b49" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          <div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;letter-spacing:0.1em;color:var(--gray-300);margin-bottom:0.2rem;text-transform:uppercase;">Email</div>
+            <span class="__cf_email__" data-cfemail="096c64686065496e64686065276a6664">[email&#160;protected]</span>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/achmadroykhansabiq/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          <div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;letter-spacing:0.1em;color:var(--gray-300);margin-bottom:0.2rem;text-transform:uppercase;">LinkedIn</div>
+            achmadroykhansabiq
+          </div>
+        </a>
+        <a href="https://www.instagram.com/roykhanachmad/" target="_blank" class="contact-link">
+          <div class="contact-link-icon">ig</div>
+          <div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;letter-spacing:0.1em;color:var(--gray-300);margin-bottom:0.2rem;text-transform:uppercase;">Instagram</div>
+            @roykhanachmad
+          </div>
+        </a>
+        <a href="#" class="contact-link">
+          <div class="contact-link-icon">↗</div>
+          <div>
+            <div style="font-size:0.7rem;font-family:'DM Mono',monospace;letter-spacing:0.1em;color:var(--gray-300);margin-bottom:0.2rem;text-transform:uppercase;">Location</div>
+            Surabaya / Bangkalan, East Java, Indonesia
+          </div>
+        </a>
+      </div>
+    </div>
+    <iframe
+      src="https://www.openstreetmap.org/export/embed.html?bbox=112.60%2C-7.35%2C112.85%2C-7.15&layer=mapnik&marker=-7.2575%2C112.7521"
+      width="100%" height="100%"
+      style="border:0; filter:grayscale(100%) contrast(1.1);"
+      loading="lazy">
+    </iframe>
+  </div>
+</section>
+ 
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Achmad Roykhan Sabiq</span>
+  <span class="footer-copy">© 2025 · Mathematics · Airlangga University</span>
+</footer>
+ 
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Nav scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+ 
+  // Hamburger
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+ 
+  // Intersection observer for sections
+  const sections = document.querySelectorAll('section:not(#hero)');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  sections.forEach(s => obs.observe(s));
+
+  // Active nav link highlight
+  const allSections = document.querySelectorAll('section[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+  const activeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navAnchors.forEach(a => a.style.color = '');
+        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (active) active.style.color = 'var(--black)';
+      }
+    });
+  }, { threshold: 0.4 });
+  allSections.forEach(s => activeObs.observe(s));
+</script>
+</body>
+</html>
